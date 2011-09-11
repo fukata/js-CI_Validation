@@ -1,31 +1,4 @@
 (function($){
-	$.CI_Validators = {
-		NAMES: ['required', 'max_length'],
-		VALIDATOR_RE: new RegExp("^([^\\[\\]]+)(\\[([^\\[\\]]*)\\])?$"),
-		CALLBACK_RE: new RegExp("^callback_(.+)$"),
-		IS_VALIDATOR: function(name) {
-			if (name === null) return false;
-
-			if (name.match($.CI_Validators.VALIDATOR_RE)) {
-				var method = RegExp.$1;
-				console.log(method);
-				for (var i=0; i<$.CI_Validators.NAMES.length; i++) {
-					if ($.CI_Validators.NAMES[i] === method) {
-						return true;
-					}
-				}
-			}
-
-			return false;
-		},
-		required: function(str) {
-			return str !== null && str !== '';
-		},
-		max_length: function(str, max) {
-			return str.length <= parseInt(max);
-		}
-	};
-
 	$.CI_Validation = function() {
 		this.rules = {};
 		this.messages = {
@@ -75,7 +48,7 @@
 		}
 
 		this._validator_argument = function(name) {
-			name.match($.CI_Validators.VALIDATOR_RE);
+			name.match($.CI_Validation.VALIDATOR_RE);
 			var argument = RegExp.$3;
 			if (typeof argument === 'undefined' || argument === '') {
 				return undefined;
@@ -85,20 +58,20 @@
 		}
 
 		this._is_validator = function(name) {
-			return $.CI_Validators.IS_VALIDATOR(name);
+			return $.CI_Validation.IS_VALIDATOR(name);
 		}
 
 		this._validator_name = function(name) {
-			name.match($.CI_Validators.VALIDATOR_RE);
+			name.match($.CI_Validation.VALIDATOR_RE);
 			return RegExp.$1;
 		}
 
 		this._is_callback = function(name) {
-			return name !== null && name.match($.CI_Validators.CALLBACK_RE);
+			return name !== null && name.match($.CI_Validation.CALLBACK_RE);
 		}
 
 		this._callback_name = function(name) {
-			name.match($.CI_Validators.CALLBACK_RE);
+			name.match($.CI_Validation.CALLBACK_RE);
 			return RegExp.$1;
 		}
 
@@ -119,7 +92,7 @@
 							break;
 						}
 					} else {
-						if (!$.CI_Validators[validator.name](rule.value, [validator.argument])) {
+						if (!$.CI_Validation[validator.name](rule.value, [validator.argument])) {
 							this._set_error_message(item, this._error_message(rule, validator));
 							break;
 						}
@@ -156,5 +129,30 @@
 			}
 			return false;
 		};
+	};
+
+	$.CI_Validation.prototype.VALIDATOR_RE = new RegExp("^([^\\[\\]]+)(\\[([^\\[\\]]*)\\])?$");
+	$.CI_Validation.prototype.CALLBACK_RE = new RegExp("^callback_(.+)$");
+	
+	$.CI_Validation.prototype.is_validator = function(name) {
+		if (name === null) return false;
+		if (name.match($.CI_Validation.VALIDATOR_RE)) {
+			var method = RegExp.$1;
+			for (var i=0; i<$.CI_Validation.validators.length; i++) {
+				if ($.CI_Validation.validators[i] === method) {
+					return true;
+				}
+			}
+		}
+	};
+
+	// Validators
+	$.CI_Validation.prototype.validatros = {
+		required: function(str) {
+			return str !== null && str !== '';
+		},
+		max_length: function(str, max) {
+			return str.length <= parseInt(max);
+		}
 	};
 })(jQuery);
