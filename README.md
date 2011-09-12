@@ -17,6 +17,12 @@ jQuery plugin Form_validation based CodeIniger.
 			}
 		}
 	});
+	
+	if (!validator.run()) {
+		for (var i in validator.errors) {
+			$('#errors').append('<p>' + validator.errors[i] + '</p>');
+		}
+	}
 
 ### Add Basic Validators
 	$.CI_Validation.prototype.validators = {
