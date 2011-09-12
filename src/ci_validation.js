@@ -7,11 +7,10 @@ var CI_Validation = function() {
 	 * Set validation rules.
 	 * 
 	 * @params item string
-	 * @params value string
 	 * @params label string
 	 * @params rules string(separator pipe)
 	 * @params callbacks hash
-	 * @return boolean
+	 * @return Hash Rule hash 
 	 */
 	this.set_rules = function(item, label, rules, callbacks) {
 		callbacks = callbacks || {};
@@ -26,6 +25,12 @@ var CI_Validation = function() {
 		return this.rules[item];
 	}
 
+	/**
+	 * Set input value.
+	 * 
+	 * @params item string
+	 * @params value mixed
+	 */
 	this.set_value = function(item, value) {
 		if (item in this.rules) {
 			this.rules[item].value = value;
@@ -111,14 +116,21 @@ var CI_Validation = function() {
 	}
 
 	this._error_message = function(rule, validator) {
-		if (validator.name in CI_Validation.prototype.messages) {
-			var msg = CI_Validation.prototype.messages[validator.name].replace('%s', rule.label);
+		var msg = false;
+
+		if (validator.name in this.messages) {
+			msg = this.messages[validator.name].replace('%s', rule.label);
+		} else if (validator.name in CI_Validation.prototype.messages) {
+			msg = CI_Validation.prototype.messages[validator.name].replace('%s', rule.label);
+		}
+
+		if (msg !== false) {
 			if (typeof validator.argument !== 'undefined') {
 				msg = msg.replace('%s', validator.argument);
 			}
-			return msg;
 		}
-		return false;
+
+		return msg;
 	}
 
 	/**

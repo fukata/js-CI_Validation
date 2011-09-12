@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test Default Validators</title>
+<script language="JavaScript" type="text/javascript" src="jsunit/app/jsUnitCore.js"></script>
+<script language="JavaScript" type="text/javascript" src="../src/ci_validation.js"></script>
+<script language="JavaScript" type="text/javascript">
+function testCustomMessageSuccess() {
+	var validator = new CI_Validation();
+	validator.messages['required'] = '%sが未入力です。';
+	validator.set_rules('name', 'NAME', 'required').set_value('');
+	validator.run();
+	
+	var expect = validator.errors['name'];
+	var accept = validator.messages['required'].replace('%s', 'NAME');
+	assertEquals(expect, accept);
+}
+
+</script>
+</head>
+
+<body>
+<h1>Test Default Validators</h1>
+</body>
+
+</html>

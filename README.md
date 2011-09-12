@@ -26,6 +26,15 @@ Form_validation based CodeIniger.
 		}
 	}
 
+### Custom Message
+	var validator = new CI_Validation();
+	// set custom message. default is "%s is required."
+	validator.messages['required'] = '%s is input please.';
+	validator.set_rules('name', 'NAME', 'required').set_value('');
+	validator.run();
+	validator.errors['required'];
+	// NAME is input please.
+
 ### Add Basic Validators
 	CI_Validation.prototype.validators = {
 		required: function(str) {
