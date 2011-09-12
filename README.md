@@ -5,7 +5,7 @@ jQuery plugin Form_validation based CodeIniger.
 ## How to
 ### Excecute validation
 	var validator = new $.CI_Validation();
-	validator.set_rules('email', 'input value', 'item label'
+	validator.set_rules('email', 'item label'
 		,'required|max_length[10]|callback_custom_email'
 		,{
 		custom_email: function(str) {
@@ -16,7 +16,9 @@ jQuery plugin Form_validation based CodeIniger.
 				return false;
 			}
 		}
-	});
+	}).set_value('input value');
+	// or call validator's set_value method 
+	// validator.set_value('email', 'input value');
 	
 	if (!validator.run()) {
 		for (var i in validator.errors) {
