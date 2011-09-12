@@ -1,10 +1,10 @@
-# jQuery CI_Validation Plugin
+# CI_Validation
 ## What's this
-jQuery plugin Form_validation based CodeIniger.
+Form_validation based CodeIniger.
 
 ## How to
 ### Excecute validation
-	var validator = new $.CI_Validation();
+	var validator = new CI_Validation();
 	validator.set_rules('email', 'item label'
 		,'required|max_length[10]|callback_custom_email'
 		,{
@@ -27,7 +27,7 @@ jQuery plugin Form_validation based CodeIniger.
 	}
 
 ### Add Basic Validators
-	$.CI_Validation.prototype.validators = {
+	CI_Validation.prototype.validators = {
 		required: function(str) {
 			// ...
 		},
