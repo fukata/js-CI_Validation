@@ -9,10 +9,34 @@
 <script language="JavaScript" type="text/javascript" src="jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="../src/jquery.ci_validation.js"></script>
 <script language="JavaScript" type="text/javascript">
-function testAddEventListener() {
-  var el = document.createElement('DIV');
-  assertNotUndefined(el.addEventListener);
+// ==============================
+// required
+// ==============================
+function testRequiredSuccess() {
+	var validator = new $.CI_Validation();
+	validator.set_rules('name', 'fukata', 'NAME', 'required');
+	assertTrue(validator.run());
 }
+function testRequiredFailed() {
+	var validator = new $.CI_Validation();
+	validator.set_rules('name', null, 'NAME', 'required');
+	assertFalse(validator.run());
+}
+
+// ==============================
+// max_length 
+// ==============================
+function testMaxLengthSuccess() {
+	var validator = new $.CI_Validation();
+	validator.set_rules('name', 'fukata', 'NAME', 'max_length[10]');
+	assertTrue(validator.run());
+}
+function testMaxLengthFailed() {
+	var validator = new $.CI_Validation();
+	validator.set_rules('name', 'tatsuya.fukata', 'NAME', 'max_length[10]');
+	assertFalse(validator.run());
+}
+
 </script>
 </head>
 

@@ -48,7 +48,7 @@
 		}
 
 		this._validator_argument = function(name) {
-			name.match($.CI_Validation.VALIDATOR_RE);
+			name.match($.CI_Validation.prototype.VALIDATOR_RE);
 			var argument = RegExp.$3;
 			if (typeof argument === 'undefined' || argument === '') {
 				return undefined;
@@ -58,20 +58,20 @@
 		}
 
 		this._is_validator = function(name) {
-			return $.CI_Validation.IS_VALIDATOR(name);
+			return $.CI_Validation.prototype.IS_VALIDATOR(name);
 		}
 
 		this._validator_name = function(name) {
-			name.match($.CI_Validation.VALIDATOR_RE);
+			name.match($.CI_Validation.prototype.VALIDATOR_RE);
 			return RegExp.$1;
 		}
 
 		this._is_callback = function(name) {
-			return name !== null && name.match($.CI_Validation.CALLBACK_RE);
+			return name !== null && name.match($.CI_Validation.prototype.CALLBACK_RE);
 		}
 
 		this._callback_name = function(name) {
-			name.match($.CI_Validation.CALLBACK_RE);
+			name.match($.CI_Validation.prototype.CALLBACK_RE);
 			return RegExp.$1;
 		}
 
@@ -81,7 +81,6 @@
 		 * @return boolean
 		 */
 		this.run = function() {
-			console.log(this.rules);
 			for (var item in this.rules) {
 				var rule = this.rules[item];
 				for (var j=0; j<rule.validators.length; j++) {
@@ -92,7 +91,7 @@
 							break;
 						}
 					} else {
-						if (!$.CI_Validation[validator.name](rule.value, [validator.argument])) {
+						if (!$.CI_Validation.prototype.validators[validator.name](rule.value, [validator.argument])) {
 							this._set_error_message(item, this._error_message(rule, validator));
 							break;
 						}
@@ -134,20 +133,17 @@
 	$.CI_Validation.prototype.VALIDATOR_RE = new RegExp("^([^\\[\\]]+)(\\[([^\\[\\]]*)\\])?$");
 	$.CI_Validation.prototype.CALLBACK_RE = new RegExp("^callback_(.+)$");
 	
-	$.CI_Validation.prototype.is_validator = function(name) {
+	$.CI_Validation.prototype.IS_VALIDATOR = function(name) {
 		if (name === null) return false;
-		if (name.match($.CI_Validation.VALIDATOR_RE)) {
-			var method = RegExp.$1;
-			for (var i=0; i<$.CI_Validation.validators.length; i++) {
-				if ($.CI_Validation.validators[i] === method) {
-					return true;
-				}
-			}
+		if (name.match($.CI_Validation.prototype.VALIDATOR_RE)
+			&& RegExp.$1 in $.CI_Validation.prototype.validators) {
+				return true;
 		}
+		return false;
 	};
 
 	// Validators
-	$.CI_Validation.prototype.validatros = {
+	$.CI_Validation.prototype.validators = {
 		required: function(str) {
 			return str !== null && str !== '';
 		},
