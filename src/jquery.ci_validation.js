@@ -12,18 +12,28 @@
 		 * 
 		 * @params item string
 		 * @params value string
-		 * @params item_name string
+		 * @params label string
 		 * @params rules string(separator pipe)
 		 * @params callbacks hash
 		 * @return boolean
 		 */
-		this.set_rules = function(item, value, item_name, rules, callbacks) {
+		this.set_rules = function(item, label, rules, callbacks) {
 			callbacks = callbacks || {};
 			this.rules[item] = {
-				item_name: item_name,
-				value: value,
-				validators: this._parse_rules(rules, callbacks)
+				label: label,
+				value: undefined,
+				validators: this._parse_rules(rules, callbacks),
+				set_value: function(val) {
+					this.value = val;
+				}
 			};
+			return this.rules[item];
+		}
+
+		this.set_value = function(item, value) {
+			if (item in this.rules) {
+				this.rules[item].value = value;
+			}
 		}
 
 		this._parse_rules = function(rules, callbacks) {
@@ -108,7 +118,7 @@
 
 		this._error_message = function(rule, validator) {
 			if (validator.name in this.messages) {
-				var msg = this.messages[validator.name].replace('%s', rule.item_name);
+				var msg = this.messages[validator.name].replace('%s', rule.label);
 				if (typeof validator.argument !== 'undefined') {
 					msg = msg.replace('%s', validator.argument);
 				}
@@ -145,7 +155,7 @@
 	// Validators
 	$.CI_Validation.prototype.validators = {
 		required: function(str) {
-			return str !== null && str !== '';
+			return typeof str !== 'undefined' && str !== null && str !== '';
 		},
 		max_length: function(str, max) {
 			return str.length <= parseInt(max);

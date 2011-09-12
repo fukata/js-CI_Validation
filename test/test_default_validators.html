@@ -14,12 +14,13 @@
 // ==============================
 function testRequiredSuccess() {
 	var validator = new $.CI_Validation();
-	validator.set_rules('name', 'fukata', 'NAME', 'required');
+	validator.set_rules('name', 'NAME', 'required').set_value('fukata');
 	assertTrue(validator.run());
 }
 function testRequiredFailed() {
 	var validator = new $.CI_Validation();
-	validator.set_rules('name', null, 'NAME', 'required');
+	validator.set_rules('name', 'NAME', 'required');
+	validator.set_value('name', undefined);
 	assertFalse(validator.run());
 }
 
@@ -28,12 +29,14 @@ function testRequiredFailed() {
 // ==============================
 function testMaxLengthSuccess() {
 	var validator = new $.CI_Validation();
-	validator.set_rules('name', 'fukata', 'NAME', 'max_length[10]');
+	validator.set_rules('name', 'NAME', 'max_length[10]');
+	validator.set_value('name', 'fukata');
 	assertTrue(validator.run());
 }
 function testMaxLengthFailed() {
 	var validator = new $.CI_Validation();
-	validator.set_rules('name', 'tatsuya.fukata', 'NAME', 'max_length[10]');
+	validator.set_rules('name', 'NAME', 'max_length[10]');
+	validator.set_value('name', 'tatsuya.fukata');
 	assertFalse(validator.run());
 }
 
