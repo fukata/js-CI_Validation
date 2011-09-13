@@ -41,6 +41,21 @@ function testMaxLengthFailed() {
 	debug(JSON.stringify(validator.errors));
 }
 
+// ==============================
+// min_length 
+// ==============================
+function testMinLengthSuccess() {
+	var validator = new CI_Validation();
+	validator.set_rules('name', 'NAME', 'min_length[3]').set_value('Tatsuya Fukata');
+	assertTrue(validator.run());
+}
+
+function testMinLengthFailed() {
+	var validator = new CI_Validation();
+	validator.set_rules('name', 'NAME', 'min_length[20]').set_value('Tatsuya Fukata');
+	assertFalse(validator.run());
+}
+
 </script>
 </head>
 

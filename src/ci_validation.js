@@ -173,7 +173,10 @@ CI_Validation.prototype.validators = {
 		return typeof str !== 'undefined' && str !== null && str !== '';
 	},
 	max_length: function(str, max) {
-		return str.length <= parseInt(max);
+		return str.length <= parseInt(max, 10);
+	},
+	min_length: function(str, min) {
+		return str.length > parseInt(min, 10);
 	}
 };
 
@@ -182,5 +185,6 @@ CI_Validation.prototype.validators = {
  */
 CI_Validation.prototype.messages = {
 	'required': '%s is required.',
-	'max_length': '%s is less than %s.'
+	'max_length': '%s is less than %s.',
+	'min_length': '%s is greater than %s.'
 };
