@@ -67,7 +67,7 @@ var CI_Validation = function() {
 	}
 
 	this._is_validator = function(name) {
-		return CI_Validation.prototype.IS_VALIDATOR(name);
+		return CI_Validation.prototype.HAS_VALIDATOR(name);
 	}
 
 	this._validator_name = function(name) {
@@ -148,8 +148,8 @@ var CI_Validation = function() {
 
 CI_Validation.prototype.VALIDATOR_RE = new RegExp("^([^\\[\\]]+)(\\[([^\\[\\]]*)\\])?$");
 CI_Validation.prototype.CALLBACK_RE = new RegExp("^callback_(.+)$");
-	
-CI_Validation.prototype.IS_VALIDATOR = function(name) {
+
+CI_Validation.prototype.HAS_VALIDATOR = function(name) {
 	if (name === null) return false;
 	if (name.match(CI_Validation.prototype.VALIDATOR_RE)
 		&& RegExp.$1 in CI_Validation.prototype.validators) {
