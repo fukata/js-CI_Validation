@@ -1,3 +1,10 @@
+/**
+ * Form_validation based CodeIniger.
+ * 
+ * @version 0.1
+ * @author Tatsuya Fukata
+ * @see http://fukata.org
+ */
 var CI_Validation = function() {
 	this.rules = {};
 	this.messages = {};
