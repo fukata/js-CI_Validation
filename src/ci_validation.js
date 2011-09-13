@@ -177,6 +177,9 @@ CI_Validation.prototype.validators = {
 	},
 	min_length: function(str, min) {
 		return str.length > parseInt(min, 10);
+	},
+	email: function(str) {
+		return str.match(/^[A-Za-z0-9]+[\w-]+@[\w\.-]+\.\w{2,}$/);
 	}
 };
 
@@ -186,5 +189,6 @@ CI_Validation.prototype.validators = {
 CI_Validation.prototype.messages = {
 	'required': '%s is required.',
 	'max_length': '%s is less than %s.',
-	'min_length': '%s is greater than %s.'
+	'min_length': '%s is greater than %s.',
+	'email': '%s is invalid Email.'
 };
