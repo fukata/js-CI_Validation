@@ -26,7 +26,7 @@ var CI_Validation = function() {
 			value: undefined,
 			validators: this._parse_rules(rules, callbacks),
 			set_value: function(val) {
-				this.value = val;
+				this.value = (typeof val === 'undefined') ? val : "" + val;
 			}
 		};
 		return this.rules[item];
@@ -38,9 +38,9 @@ var CI_Validation = function() {
 	 * @params item string
 	 * @params value mixed
 	 */
-	this.set_value = function(item, value) {
+	this.set_value = function(item, val) {
 		if (item in this.rules) {
-			this.rules[item].value = value;
+			this.rules[item].value = (typeof val === 'undefined') ? val : "" + val;
 		}
 	}
 
@@ -178,6 +178,15 @@ CI_Validation.prototype.validators = {
 	min_length: function(str, min) {
 		return str.length > parseInt(min, 10);
 	},
+	int_num: function(str) {
+		return str.match(/^[0-9]+$/);
+	},
+	float_num: function(str) {
+		return str.match(/^[0-9]+(\.[0-9]+)?$/);
+	},
+	numeric: function(str) {
+		return str.match(/^(\+|\-)?[0-9]+(\.[0-9]+)?$/);
+	},
 	email: function(str) {
 		return str.match(/^[A-Za-z0-9]+[\w-]+@[\w\.-]+\.\w{2,}$/);
 	}
@@ -190,5 +199,8 @@ CI_Validation.prototype.messages = {
 	'required': '%s is required.',
 	'max_length': '%s is less than %s.',
 	'min_length': '%s is greater than %s.',
+	'int_num': '%s is invalid integer.',
+	'float_num': '%s is invalid float.',
+	'numeric': '%s is invalid numeric.',
 	'email': '%s is invalid Email.'
 };

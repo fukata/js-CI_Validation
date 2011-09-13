@@ -57,6 +57,87 @@ function testMinLengthFailed() {
 }
 
 // ==============================
+// int_num 
+// ==============================
+function testIntNumSuccess() {
+	var validator = new CI_Validation();
+	validator.set_rules('age', 'AGE', 'int_num').set_value(10);
+	assertTrue(validator.run());
+}
+
+function testIntNumFailed() {
+	var validator = new CI_Validation();
+	validator.set_rules('age', 'AGE', 'int_num').set_value(10.01);
+	assertFalse(validator.run());
+}
+
+// ==============================
+// float_num 
+// ==============================
+function testFloatNumSuccess() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'float_num').set_value(10.11);
+	assertTrue(validator.run());
+}
+
+function testFloatNumSuccess_IntNum() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'float_num').set_value(10);
+	assertTrue(validator.run());
+}
+
+function testFloatNumFailed() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'float_num').set_value(-10);
+	assertFalse(validator.run());
+}
+
+// ==============================
+// numeric 
+// ==============================
+function testNumericSuccess_IntNum() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'numeric').set_value(10);
+	assertTrue(validator.run());
+}
+
+function testNumericSuccess_FloatNum() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'numeric').set_value(10.01);
+	assertTrue(validator.run());
+}
+
+function testNumericSuccess_PlusIntNum() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'numeric').set_value("+10");
+	assertTrue(validator.run());
+}
+
+function testNumericSuccess_PlusFloatNum() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'numeric').set_value("+10.01");
+	assertTrue(validator.run());
+}
+
+function testNumericSuccess_MinusIntNum() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'numeric').set_value("-10");
+	assertTrue(validator.run());
+}
+
+function testNumericSuccess_MinusFloatNum() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'numeric').set_value("-10.01");
+	assertTrue(validator.run());
+}
+
+function testNumericFailed() {
+	var validator = new CI_Validation();
+	validator.set_rules('point', 'POINT', 'numeric').set_value("1,000");
+	assertFalse(validator.run());
+}
+
+// ==============================
 // email 
 // ==============================
 function testEmailSuccess() {
