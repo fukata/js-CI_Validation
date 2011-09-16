@@ -108,7 +108,7 @@ var CI_Validation = function() {
 					}
 				} else {
 					if (!CI_Validation.prototype.validators[validator.name](rule.value, [validator.argument])) {
-						this._set_error_message(item, this._error_message(rule, validator));
+						this.set_message(item, this._error_message(rule, validator));
 						break;
 					}
 				}
@@ -118,7 +118,7 @@ var CI_Validation = function() {
 		return !this.has_errors();
 	}
 
-	this._set_error_message = function(item, msg) {
+	this.set_message = function(item, msg) {
 		this.errors[item] = msg;
 	}
 

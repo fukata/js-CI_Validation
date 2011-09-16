@@ -12,7 +12,7 @@ Form_validation based CodeIniger.
 			if (str === 'fukata@example.com') {
 				return true;
 			} else {
-				this._set_error_message('email', 'Email is does not "fukata@example.com".');
+				this.set_message('email', 'Email is does not "fukata@example.com".');
 				return false;
 			}
 		}
