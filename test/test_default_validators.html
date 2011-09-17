@@ -146,6 +146,12 @@ function testEmailSuccess() {
 	assertTrue(validator.run());
 }
 
+function testEmailSuccess2() {
+	var validator = new CI_Validation();
+	validator.set_rules('email', 'EMAIL', 'email').set_value('hoge.foo@example.com');
+	assertTrue(validator.run());
+}
+
 function testEmailFailed() {
 	var validator = new CI_Validation();
 	validator.set_rules('email', 'EMAIL', 'email').set_value('Tatsuya Fukata');
